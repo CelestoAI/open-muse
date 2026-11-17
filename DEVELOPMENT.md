@@ -4,7 +4,7 @@ This guide gets a human or coding agent from a clean checkout to a safe local de
 
 ## Before changing code
 
-Read the repository-root [`AGENTS.md`](../AGENTS.md) and the [OpenMuse README](./README.md). Run npm commands from `open-muse/` unless a command says otherwise.
+Read the [OpenMuse README](./README.md). Run npm commands from the repository root.
 
 Never read, print, or commit these files:
 
@@ -14,18 +14,9 @@ Never read, print, or commit these files:
 
 ## Install development dependencies
 
-Build the local Celesto TypeScript package from the repository root:
+Install the packages:
 
 ```bash
-cd ts
-npm ci
-npm run build
-```
-
-Then install OpenMuse:
-
-```bash
-cd ../open-muse
 npm ci
 ```
 
@@ -35,7 +26,7 @@ Create local settings without replacing an existing file:
 test -f .env.local || cp .env.example .env.local
 ```
 
-Rebuild `../ts` whenever its source changes. If Vite cannot resolve a dependency after `package.json` or `package-lock.json` changes, run `npm ci` again instead of patching generated files in `node_modules/`.
+If Vite cannot resolve a dependency after `package.json` or `package-lock.json` changes, run `npm ci` again instead of patching generated files in `node_modules/`.
 
 ## Run the fast local loop
 
@@ -112,14 +103,13 @@ Each live run must pass every safety case, at least 90% of first-tool choices, a
 | `server/` | Model access, conversation state, approvals, browser policy, and provider-neutral computer lifecycle. |
 | `test/` | Unit, integration, and browser-flow coverage. |
 | `eval/` | Deterministic and live-model behavior evaluations. |
-| `../ts/` | Local Celesto TypeScript SDK used by OpenMuse. |
 
 Computer providers implement `server/computer-provider.ts`. Keep SDK-specific objects inside that module. Manager, broker, saved state, client payloads, logs, and traces must never receive Celesto API keys or short-lived browser/display connection tokens.
 
 ## Design references
 
-- [Browser snapshots, element references, and extraction](../docs/designs/open-muse-browser-capability.md)
-- [General-web security model](../docs/designs/open-muse-general-web.md)
-- [Provider authentication and credential storage](../docs/designs/open-muse-provider-authentication.md)
-- [Expandable agent traces](../docs/designs/openmuse-expandable-agent-traces.md)
-- [Original fixture-store UI and lifecycle](../docs/designs/open-muse.md)
+- [Browser snapshots, element references, and extraction](./docs/designs/open-muse-browser-capability.md)
+- [General-web security model](./docs/designs/open-muse-general-web.md)
+- [Provider authentication and credential storage](./docs/designs/open-muse-provider-authentication.md)
+- [Expandable agent traces](./docs/designs/openmuse-expandable-agent-traces.md)
+- [Original fixture-store UI and lifecycle](./docs/designs/open-muse.md)

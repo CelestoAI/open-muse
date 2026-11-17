@@ -60,7 +60,7 @@ Deliver it in three security milestones:
 1. **Authenticated browsing:** dedicated persistent profile artifact, safe human-only login, external-network interception, and one reviewed site adapter before an Amazon cart demonstration.
 1. **Computer workspace:** unprivileged shell/files only after the agent cannot reach profile data or CDP from its guest identity. If that isolation is not reliable, the browser example remains browser-only.
 
-![Approved OpenMuse wireframe](../assets/open-muse-wireframe.png)
+![Approved OpenMuse wireframe](https://github.com/CelestoAI/celesto/blob/main/docs/assets/open-muse-wireframe.png)
 
 ```text
 Browser on 127.0.0.1
@@ -449,7 +449,7 @@ Give one TypeScript developer the finished example without setup help. Ask them 
 
 ## References
 
-- [Celesto browser sandboxes](../guides/browser.md)
+- [Celesto browser sandboxes](https://github.com/CelestoAI/celesto/blob/main/docs/guides/browser.md)
 - [OpenMuse Research design](./open-muse-research.md)
 - [Browser Use session profiles](https://github.com/browser-use/browser-use/blob/main/skills/cloud/references/sessions.md)
 - [OpenAI computer-using agent](https://openai.com/index/computer-using-agent/)

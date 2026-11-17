@@ -9,7 +9,7 @@
 OpenMuse is an open-source computer coworker that browses public websites in its own disposable Linux desktop. Tell it what you want in chat, watch the computer work, approve actions that change a page, and take control whenever you need to enter something yourself.
 
 > \[!IMPORTANT\]
-> OpenMuse is a source-checkout preview for local development. Public browsing requires local QEMU and a compatible browser image; cloud browsing is disabled. Updated image releases still need the [security release checks](../docs/security.md#release-requirements).
+> OpenMuse is a preview for local development. Public browsing requires local QEMU and a compatible browser image; cloud browsing is disabled. Updated image releases still need the [security release checks](https://github.com/CelestoAI/celesto/blob/main/docs/security.md#release-requirements).
 
 ## What you can do
 
@@ -36,7 +36,7 @@ Install Celesto, prepare your machine, and verify the setup with one command:
 curl -sSL https://celesto.ai/install.sh | bash
 ```
 
-The installer adds the Python tooling Celesto needs, installs Celesto, prepares your machine, and runs its readiness check. See the [manual installation guide](../docs/installation.md) if the installer reports a problem.
+The installer adds the Python tooling Celesto needs, installs Celesto, prepares your machine, and runs its readiness check. See the [manual installation guide](https://github.com/CelestoAI/celesto/blob/main/docs/installation.md) if the installer reports a problem.
 
 Public browsing explicitly uses QEMU on Linux and macOS. Run `celesto doctor --backend qemu` and follow any recovery instructions before starting OpenMuse; having Firecracker installed alone is insufficient.
 
@@ -48,26 +48,17 @@ celesto image pull linux-desktop
 
 The download is needed only once. Later runs reuse the local image.
 
-### 2. Build the local TypeScript SDK
+### 2. Install OpenMuse
 
-OpenMuse uses the unreleased Celesto TypeScript package in `../ts`. Build it once from the repository root:
-
-```bash
-cd ts
-npm ci
-npm run build
-```
-
-### 3. Install OpenMuse
-
-Move into the app directory and install its packages:
+Clone this repository and install its packages:
 
 ```bash
-cd ../open-muse
+git clone https://github.com/CelestoAI/open-muse.git
+cd open-muse
 npm ci
 ```
 
-Create the local settings file. It points OpenMuse at the Celesto runtime in this checkout:
+Create the local settings file. It uses the `celesto` command you installed in step 1:
 
 ```bash
 test -f .env.local || cp .env.example .env.local
@@ -75,7 +66,7 @@ test -f .env.local || cp .env.example .env.local
 
 This keeps an existing local settings file unchanged.
 
-### 4. Start the app
+### 3. Start the app
 
 ```bash
 npm run dev
@@ -92,7 +83,7 @@ Open [http://127.0.0.1:5174](http://127.0.0.1:5174). Expand **Use an OpenAI API 
 
 You can instead set `OPENAI_API_KEY` in `.env.local` before starting the app. Do not commit that file.
 
-### 5. Try the first task
+### 4. Try the first task
 
 Send:
 
@@ -155,7 +146,7 @@ OpenMuse reads `.env.local` when the Node.js server starts.
 | `OPENAI_API_KEY` | unset | Uses an OpenAI API key without entering it in the app. |
 | `OPENAI_MODEL` | `gpt-5.6-luna` | Selects the initial model when an environment API key is used. |
 | `OPENMUSE_COMPUTER_PROVIDER` | `local` | Selects the provider; public browsing currently requires `local`. |
-| `CELESTO_RUNTIME` | `celesto` | Chooses the Celesto command. `.env.example` points to the source-checkout wrapper. |
+| `CELESTO_RUNTIME` | `celesto` | Chooses the Celesto command. |
 | `CELESTO_API_KEY` | unset | Required server-only credential when the computer provider is `celesto`. |
 | `CELESTO_API_URL` | Celesto production API | Optional development or self-hosted Celesto control-plane URL. |
 | `OPEN_MUSE_HOST` | `127.0.0.1` | Local bind address. Other addresses are rejected. |
@@ -171,26 +162,24 @@ Saved credentials are limited to the current operating-system user on macOS and 
 
 ### The app says it could not start a private computer
 
-Run the runtime check from the repository root and follow its recovery message:
+Run the runtime check and follow its recovery message:
 
 ```bash
-uv run celesto doctor
+celesto doctor
 ```
 
-If the image download was interrupted, retry it from the repository root:
+If the image download was interrupted, retry it:
 
 ```bash
-uv run celesto image pull linux-desktop
+celesto image pull linux-desktop
 ```
 
 ### The Celesto TypeScript package cannot be resolved
 
-Rebuild the local package, then restart OpenMuse:
+Reinstall the packages, then restart OpenMuse:
 
 ```bash
-cd ../ts
 npm ci
-npm run build
 ```
 
 ### Celesto Cloud is selected but does not start
@@ -223,14 +212,14 @@ An approved operation is recorded before it runs. A failure before dispatch appe
 
 ### Current security boundary
 
-Structured navigation rejects local and private literal addresses. The local computer also uses Celesto's public-only proxy, which checks destination addresses after DNS resolution and blocks direct outbound connections. Missing proxy enforcement stops startup. See [public browser connections](#public-browser-connections) and [secure local access](../docs/security.md) for supported configurations and release requirements.
+Structured navigation rejects local and private literal addresses. The local computer also uses Celesto's public-only proxy, which checks destination addresses after DNS resolution and blocks direct outbound connections. Missing proxy enforcement stops startup. See [public browser connections](#public-browser-connections) and [secure local access](https://github.com/CelestoAI/celesto/blob/main/docs/security.md) for supported configurations and release requirements.
 
 ## Contributing and help
 
-- Read the repository [contribution guide](../CONTRIBUTING.md) before opening a pull request.
+- Read the repository [contribution guide](https://github.com/CelestoAI/celesto/blob/main/CONTRIBUTING.md) before opening a pull request.
 - [Report an OpenMuse bug](https://github.com/CelestoAI/celesto/issues/new?template=bug_report.yml) with reproduction steps and machine details.
 - [Propose a feature](https://github.com/CelestoAI/celesto/issues/new?template=feature_request.yml) before starting a large change.
-- Report security problems privately through [GitHub Security Advisories](https://github.com/CelestoAI/celesto/security/advisories/new), not a public issue. See the [security policy](../SECURITY.md) for details.
+- Report security problems privately through [GitHub Security Advisories](https://github.com/CelestoAI/celesto/security/advisories/new), not a public issue. See the [security policy](https://github.com/CelestoAI/celesto/blob/main/SECURITY.md) for details.
 
 Implementation maps and design documents are indexed in the [OpenMuse development guide](./DEVELOPMENT.md).
 
